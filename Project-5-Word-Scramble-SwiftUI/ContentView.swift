@@ -7,24 +7,66 @@
 
 import SwiftUI
 
+//Working with strings
+
 struct ContentView: View {
 
     
     var body: some View {
 
-        if let fileURL = Bundle.main.url(forResource: "some-file", withExtension: "txt") {
-            // we found the file in our bundle!
-            
-            if let fileCOntents = try? String(contentsOf: fileURL) {
-                // we loaded the file into a string!
-            }
-        }
+        let input = "a b c"
+        let letters = input.components(separatedBy: " ")
+        print(letters)
+       
+        let input2 = """
+            a
+            b
+            c
+            """
+        let letters2 = input2.components(separatedBy: "\n")
+        print(letters2)
         
         
+        let letter = letters.randomElement()
         
-        Text("Hello world")
+        let trimmed = letter?.trimmingCharacters(in: .whitespacesAndNewlines)
+        print(trimmed)
+        
+        // Checking a string for misspelled words
+        let word = "swift"
+        let checker = UITextChecker()
+        
+        let range = NSRange(location: 0, length: word.utf16.count)
+        
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        let allGood = misspelledRange.location == NSNotFound
+        print(allGood)
+        
+        return Text("Hello world")
     }
 }
+
+
+////Loading resources from your app bundle
+//
+//struct ContentView: View {
+//
+//
+//    var body: some View {
+//
+//        if let fileURL = Bundle.main.url(forResource: "some-file", withExtension: "txt") {
+//            // we found the file in our bundle!
+//
+//            if let fileCOntents = try? String(contentsOf: fileURL) {
+//                // we loaded the file into a string!
+//            }
+//        }
+//
+//
+//
+//        Text("Hello world")
+//    }
+//}
 
 //2
 
