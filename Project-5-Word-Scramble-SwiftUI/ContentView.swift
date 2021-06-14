@@ -9,25 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
 
-
+    
     var body: some View {
 
-        VStack {
-            List(people, id: \.self) {
-                Text($0)
-            }
+        if let fileURL = Bundle.main.url(forResource: "some-file", withExtension: "txt") {
+            // we found the file in our bundle!
             
-            //When we want to mix dynamic and static rows
-            List {
-                ForEach(people, id: \.self) {
-                    Text($0)
-                }
+            if let fileCOntents = try? String(contentsOf: fileURL) {
+                // we loaded the file into a string!
             }
         }
         
         
         
-        
+        Text("Hello world")
     }
 }
 
