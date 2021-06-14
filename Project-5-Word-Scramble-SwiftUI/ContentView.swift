@@ -7,44 +7,90 @@
 
 import SwiftUI
 
-//Working with strings
 
 struct ContentView: View {
 
+    @State private var usedWords = [String]()
+    @State private var rootWord = "sdsds"
+    @State private var newWord = ""
     
     var body: some View {
 
-        let input = "a b c"
-        let letters = input.components(separatedBy: " ")
-        print(letters)
-       
-        let input2 = """
-            a
-            b
-            c
-            """
-        let letters2 = input2.components(separatedBy: "\n")
-        print(letters2)
+        NavigationView {
+            VStack {
+                TextField("Enter your word", text: $newWord, onCommit: addNewWord)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                    .autocapitalization(.none)
+                
+                List(usedWords, id: \.self) {
+                    Image(systemName: "\($0.count).circle")
+                    Text($0)
+                }
+                
+            }
+            .navigationBarTitle(rootWord)
+        }
+     
+
+    }
+    
+    
+    func addNewWord() {
+        // lowercase and trim the word, to make sure we don't add duplicate words with case differences
+        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         
+        // exit if the remaining string is empty
+        guard answer.count > 0 else {
+            return
+        }
         
-        let letter = letters.randomElement()
-        
-        let trimmed = letter?.trimmingCharacters(in: .whitespacesAndNewlines)
-        print(trimmed)
-        
-        // Checking a string for misspelled words
-        let word = "swift"
-        let checker = UITextChecker()
-        
-        let range = NSRange(location: 0, length: word.utf16.count)
-        
-        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
-        let allGood = misspelledRange.location == NSNotFound
-        print(allGood)
-        
-        return Text("Hello world")
+        // extra validation to come
+        usedWords.insert(answer, at: 0)
+        newWord = ""
     }
 }
+
+
+
+////Working with strings
+//
+//struct ContentView: View {
+//
+//
+//    var body: some View {
+//
+//        let input = "a b c"
+//        let letters = input.components(separatedBy: " ")
+//        print(letters)
+//
+//        let input2 = """
+//            a
+//            b
+//            c
+//            """
+//        let letters2 = input2.components(separatedBy: "\n")
+//        print(letters2)
+//
+//
+//        let letter = letters.randomElement()
+//
+//        let trimmed = letter?.trimmingCharacters(in: .whitespacesAndNewlines)
+//        print(trimmed)
+//
+//        // Checking a string for misspelled words
+//        let word = "swift"
+//        let checker = UITextChecker()
+//
+//        let range = NSRange(location: 0, length: word.utf16.count)
+//
+//        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+//        let allGood = misspelledRange.location == NSNotFound
+//        print(allGood)
+//
+//        return Text("Hello world")
+//    }
+//}
 
 
 ////Loading resources from your app bundle
