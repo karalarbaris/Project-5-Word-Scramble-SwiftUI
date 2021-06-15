@@ -18,6 +18,8 @@ struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showingError = false
 
+    @State private var score = 0
+    
     var body: some View {
 
         NavigationView {
@@ -31,6 +33,8 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                
+                Text("Your score is: \(score)")
                 
             }
             .navigationBarTitle(rootWord)
@@ -71,7 +75,8 @@ struct ContentView: View {
            return
         }
 
-
+        addScore()
+        
         usedWords.insert(answer, at: 0)
         newWord = ""
     }
@@ -136,6 +141,10 @@ struct ContentView: View {
         errorTitle = title
         errorMessage = message
         showingError = true
+    }
+    
+    func addScore() {
+        score += newWord.count
     }
     
 }
