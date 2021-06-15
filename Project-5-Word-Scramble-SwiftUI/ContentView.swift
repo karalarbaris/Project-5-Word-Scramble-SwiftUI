@@ -38,6 +38,9 @@ struct ContentView: View {
             .alert(isPresented: $showingError) {
                 Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("Okay")))
             }
+            .navigationBarItems(leading: Button(action: startGame, label: {
+                Text("Restart")
+            }))
         }
      
 
